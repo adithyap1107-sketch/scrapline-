@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Scrapline</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #e9edef;
+      --card: #fff;
+      --ink: #14232e;
+      --mute: #5b6b76;
+      --line: #c9d2d8;
+      --green: #1e7b4f;
+      --gdk: #155c3a;
+      --yel: #f2c230;
+      --red: #b3372b;
+      --on-g: #fff;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    @media(prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1a21;
+        --card: #17262f;
+        --ink: #e8eef1;
+        --mute: #93a5b0;
+        --line: #2b3e49;
+        --green: #3fbf82;
+        --gdk: #5ad39a;
+        --red: #ef7b6e;
+        --on-g: #0b1a12
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0f1a21;
+      --card: #17262f;
+      --ink: #e8eef1;
+      --mute: #93a5b0;
+      --line: #2b3e49;
+      --green: #3fbf82;
+      --gdk: #5ad39a;
+      --red: #ef7b6e;
+      --on-g: #0b1a12
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 16px/1.5 Archivo, system-ui, sans-serif
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 16px 48px
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 3px solid var(--ink)
+    }
+
+    .logo {
+      font: 800 26px/1 Archivo, sans-serif;
+      letter-spacing: -.5px;
+      cursor: pointer;
+      background: none;
+      border: 0;
+      color: var(--ink);
+      padding: 0
+    }
+
+    .logo i {
+      font-style: normal;
+      background: var(--yel);
+      color: #14232e;
+      padding: 0 6px;
+      margin-left: 2px
+    }
+
+    h1 {
+      font: 800 clamp(34px, 7vw, 64px)/1 Archivo, sans-serif;
+      letter-spacing: -1.5px;
+      margin: 32px 0 10px;
+      max-width: 14ch
+    }
+
+    h2 {
+      font: 700 22px/1.2 "Archivo Narrow", Archivo, sans-serif;
+      margin: 0 0 12px
+    }
+
+    p.lead {
+      color: var(--mute);
+      max-width: 52ch;
+      margin: 0 0 28px
+    }
+
+    .portals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px
+    }
+
+    @media(max-width:700px) {
+      .portals {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .portal {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .portal.b {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    .portal.b input {
+      background: #fff;
+      color: #14232e
+    }
+
+    .portal.b label {
+      color: #c9d2d8
+    }
+
+    .portal h2 {
+      font-size: 28px;
+      margin: 0
+    }
+
+    .portal p {
+      margin: 0;
+      opacity: .85
+    }
+
+    label {
+      font: 600 13px "Archivo Narrow", Archivo, sans-serif;
+      color: var(--mute);
+      display: block;
+      margin-bottom: 3px
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      font: inherit;
+      padding: 10px 12px;
+      border: 2px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 0
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus,
+    button:focus-visible {
+      outline: 3px solid var(--yel);
+      outline-offset: 1px
+    }
+
+    .btn {
+      font: 700 15px Archivo, sans-serif;
+      padding: 11px 18px;
+      border: 2px solid var(--ink);
+      background: var(--green);
+      color: var(--on-g);
+      cursor: pointer;
+      border-radius: 0
+    }
+
+    .btn:hover {
+      background: var(--gdk)
+    }
+
+    .btn.sec {
+      background: transparent;
+      color: var(--ink)
+    }
+
+    .btn.sec:hover {
+      background: var(--line)
+    }
+
+    .btn.warn {
+      background: transparent;
+      color: var(--red);
+      border-color: var(--red)
+    }
+
+    .btn.y {
+      background: var(--yel);
+      color: #14232e
+    }
+
+    .btn.y:hover {
+      background: #dcae1a
+    }
+
+    .btn.sm {
+      padding: 6px 12px;
+      font-size: 13px
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 340px) 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 22px
+    }
+
+    @media(max-width:800px) {
+      .grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .panel {
+      background: var(--card);
+      border: 2px solid var(--ink);
+      padding: 18px
+    }
+
+    .rates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px
+    }
+
+    .rate {
+      border: 2px solid var(--ink);
+      background: var(--card);
+      padding: 6px 12px;
+      font: 700 14px "Archivo Narrow", sans-serif
+    }
+
+    .rate b {
+      color: var(--green)
+    }
+
+    .est {
+      background: var(--yel);
+      color: #14232e;
+      padding: 10px 12px;
+      font-weight: 600;
+      margin: 4px 0 12px
+    }
+
+    .item {
+      border: 2px solid var(--line);
+      border-left: 8px solid var(--line);
+      background: var(--card);
+      padding: 14px;
+      margin-bottom: 12px
+    }
+
+    .item.open {
+      border-left-color: var(--yel)
+    }
+
+    .item.scheduled {
+      border-left-color: var(--green)
+    }
+
+    .item.done {
+      border-left-color: var(--mute);
+      opacity: .85
+    }
+
+    .item h3 {
+      margin: 0 0 4px;
+      font: 700 18px "Archivo Narrow", sans-serif;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .tag {
+      font: 700 12px "Archivo Narrow", sans-serif;
+      padding: 2px 8px;
+      border: 2px solid currentColor
+    }
+
+    .tag.open {
+      color: #8a6a00
+    }
+
+    .tag.scheduled {
+      color: var(--green)
+    }
+
+    .tag.done {
+      color: var(--mute)
+    }
+
+    @media(prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) .tag.open {
+        color: var(--yel)
+      }
+    }
+
+    .meta {
+      color: var(--mute);
+      font-size: 14px;
+      margin: 2px 0
+    }
+
+    .acts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: end;
+      margin-top: 10px
+    }
+
+    .acts>div {
+      flex: 1 1 120px
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin: 20px 0 0;
+      flex-wrap: wrap
+    }
+
+    .tab {
+      font: 700 14px "Archivo Narrow", sans-serif;
+      padding: 8px 14px;
+      border: 2px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer
+    }
+
+    .tab[aria-selected=true] {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    .empty {
+      border: 2px dashed var(--line);
+      padding: 26px;
+      text-align: center;
+      color: var(--mute)
+    }
+
+    .who {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 18px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+      z-index: 99
+    }
+
+    #toast.on {
+      opacity: 1
+    }
+
+    .err {
+      color: var(--red);
+      font-size: 14px;
+      min-height: 20px;
+      margin: 0
+    }
+
+    .portal.b .err {
+      color: #ffb4aa
+    }
+
+    /* ── Photo upload & preview ── */
+    .photo-preview-wrap {
+      position: relative;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .photo-preview-wrap.has-photo {
+      display: block
+    }
+
+    .photo-preview-wrap img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border: 2px solid var(--ink);
+      display: block;
+    }
+
+    .photo-preview-wrap .rm-photo {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      cursor: pointer;
+      font: 700 12px Archivo, sans-serif;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+
+    .photo-cam-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .photo-cam-btn button {
+      flex: 1;
+      font: 700 13px 'Archivo Narrow', Archivo, sans-serif;
+      padding: 9px 10px;
+      border: 2px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .card-photo {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border: 2px solid var(--line);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ── Payment Modal ── */
+    #pay-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 110;
+      background: rgba(15, 26, 33, 0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    #pay-modal.open {
+      display: flex;
+    }
+
+    .pay-card {
+      background: var(--card);
+      border: 3px solid var(--ink);
+      max-width: 480px;
+      width: 100%;
+      padding: 24px;
+      color: var(--ink);
+      box-shadow: 8px 8px 0px var(--ink);
+    }
+
+    .pay-card h2 {
+      font-size: 24px;
+      margin-top: 0;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    .pay-breakdown {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 12px;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+
+    .pay-breakdown .line-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .pay-breakdown .total {
+      font-size: 18px;
+      font-weight: 800;
+      border-top: 2px dashed var(--line);
+      padding-top: 8px;
+      margin-top: 8px;
+      color: var(--green);
+    }
+
+    .pay-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .method-opt {
+      border: 2px solid var(--line);
+      padding: 10px 6px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .method-opt.active {
+      border-color: var(--ink);
+      background: var(--yel);
+      color: #14232e;
+    }
+
+    /* ── Camera modal ── */
+    #cam-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, .85);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    #cam-modal.open {
+      display: flex
+    }
+
+    #cam-modal video {
+      max-width: 100%;
+      max-height: 65vh;
+      border: 3px solid var(--yel);
+      background: #000;
+      display: block;
+    }
+
+    .cam-controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cam-shutter {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      background: var(--yel);
+      cursor: pointer;
+      box-shadow: 0 0 0 6px rgba(255, 255, 255, .25);
+    }
+
+    .cam-close {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      font: 700 14px Archivo, sans-serif;
+      padding: 10px 20px;
+      cursor: pointer;
+      align-self: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <button class="logo" onclick="go('home')" aria-label="Scrapline home">Scrap<i>line</i></button>
+      <div class="who" id="who"></div>
+    </header>
+    <main id="app"></main>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Buyer Checkout & Payout Interface Modal -->
+  <div id="pay-modal">
+    <div class="pay-card">
+      <h2>Complete Pickup & Pay Seller</h2>
+      <div class="pay-breakdown" id="pay-summary"></div>
+
+      <label>Choose payment mode</label>
+      <div class="pay-methods">
+        <div class="method-opt active" onclick="setPayMethod('UPI', this)">UPI</div>
+        <div class="method-opt" onclick="setPayMethod('Bank Transfer', this)">IMPS/NEFT</div>
+        <div class="method-opt" onclick="setPayMethod('Cash', this)">Cash</div>
+      </div>
+
+      <div id="pay-dynamic-fields" style="margin-bottom: 14px;"></div>
+
+      <div style="display:flex;gap:8px;">
+        <button class="btn" style="flex:2" onclick="confirmPayment()">Authorize & Record Payout</button>
+        <button class="btn sec" style="flex:1" onclick="closePayment()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const RATES = { Paper: 20, Plastic: 18, Metal: 38, "E-waste": 60, Glass: 15 };
+    const SLOTS = ["9 am – 12 pm", "12 pm – 3 pm", "3 pm – 6 pm"];
+    const KEY = "scrapline.v2";
+    let mem = null;
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const today = () => new Date().toISOString().slice(0, 10);
+    const inDays = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+    const fmtD = d => new Date(d + "T00:00").toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+    const inr = n => "₹" + Math.round(n).toLocaleString("en-IN");
+
+    function seed() {
+      return {
+        listings: [
+          // Available scrap for buyer discovery
+          { id: 101, seller: "Meera K.", phone: "9876500011", cat: "Paper", kg: 35, area: "Indiranagar, 12th Main", date: inDays(1), slot: SLOTS[0], note: "Old textbooks, packaging cartons and newsprints bundled.", status: "open" },
+          { id: 102, seller: "Ravi Shankar", phone: "9876500022", cat: "E-waste", kg: 14, area: "Koramangala 4th Block", date: inDays(1), slot: SLOTS[1], note: "2 UPS batteries, CRT monitor, keyboards, old cables.", status: "open" },
+          { id: 103, seller: "Anita Prasad", phone: "9876500033", cat: "Metal", kg: 55, area: "HSR Layout Sec 2", date: inDays(2), slot: SLOTS[2], note: "Iron scaffolding parts and damaged brass utensils.", status: "open" },
+          { id: 104, seller: "Suresh Gowda", phone: "9876500044", cat: "Plastic", kg: 22, area: "Whitefield, Inner Circle", date: inDays(2), slot: SLOTS[0], note: "Bulk clean PET bottles and broken storage crates.", status: "open" },
+          { id: 105, seller: "Pooja Hegde", phone: "9876500055", cat: "Glass", kg: 45, area: "Malleshwaram 7th Cross", date: inDays(3), slot: SLOTS[1], note: "Assorted soda and beer bottles packed in carton boxes.", status: "open" },
+
+          // Already scheduled pickup (ready for payment test)
+          {
+            id: 106,
+            seller: "Karthik Nair",
+            phone: "9876500066",
+            cat: "Metal",
+            kg: 30,
+            area: "BTM Layout 2nd Stage",
+            date: inDays(1),
+            slot: SLOTS[0],
+            note: "Old air conditioner compressor casing and copper tubes.",
+            status: "scheduled",
+            buyer: "EcoRecycle Hub",
+            buyerPhone: "9898989898",
+            buyerDate: inDays(1),
+            buyerSlot: SLOTS[0]
+          },
+
+          // Previously completed transaction
+          {
+            id: 107,
+            seller: "Meera K.",
+            phone: "9876500011",
+            cat: "Paper",
+            kg: 20,
+            actualKg: 22.5,
+            payout: 450,
+            area: "Indiranagar, 12th Main",
+            date: inDays(-2),
+            slot: SLOTS[0],
+            note: "Cartons bundled.",
+            status: "done",
+            buyer: "EcoRecycle Hub",
+            buyerPhone: "9898989898",
+            buyerDate: inDays(-2),
+            paymentMethod: "UPI",
+            txRef: "UPI-PAY-88239"
+          },
+
+          // ── Meera K.'s own posted ads ──
+
+          // Open – waiting for a collector
+          {
+            id: 201,
+            seller: "Meera K.",
+            phone: "9876500011",
+            cat: "Plastic",
+            kg: 18,
+            area: "Indiranagar, 12th Main",
+            date: inDays(2),
+            slot: SLOTS[1],
+            note: "Clean PET water bottles and HDPE cans from kitchen. Sorted and bagged.",
+            status: "open"
+          },
+          {
+            id: 202,
+            seller: "Meera K.",
+            phone: "9876500011",
+            cat: "E-waste",
+            kg: 8,
+            area: "Indiranagar, 12th Main",
+            date: inDays(3),
+            slot: SLOTS[2],
+            note: "Old laptop, 2 mobile phones, broken chargers and power adapters.",
+            status: "open"
+          },
+
+          // Scheduled – buyer has already confirmed pickup
+          {
+            id: 203,
+            seller: "Meera K.",
+            phone: "9876500011",
+            cat: "Metal",
+            kg: 12,
+            area: "Indiranagar, 12th Main",
+            date: inDays(1),
+            slot: SLOTS[0],
+            note: "Old steel pressure cooker, broken iron stand, and aluminium pots.",
+            status: "scheduled",
+            buyer: "GreenMetal Traders",
+            buyerPhone: "9845001122",
+            buyerDate: inDays(1),
+            buyerSlot: SLOTS[0]
+          },
+
+          // Done – paid out, older transactions
+          {
+            id: 204,
+            seller: "Meera K.",
+            phone: "9876500011",
+            cat: "Glass",
+            kg: 30,
+            actualKg: 28,
+            payout: 420,
+            area: "Indiranagar, 12th Main",
+            date: inDays(-5),
+            slot: SLOTS[1],
+            note: "Wine and sauce bottles rinsed and boxed.",
+            status: "done",
+            buyer: "EcoRecycle Hub",
+            buyerPhone: "9898989898",
+            buyerDate: inDays(-5),
+            paymentMethod: "Cash",
+            txRef: "CASH-334821"
+          },
+          {
+            id: 205,
+            seller: "Meera K.",
+            phone: "9876500011",
+            cat: "Paper",
+            kg: 45,
+            actualKg: 47,
+            payout: 940,
+            area: "Indiranagar, 12th Main",
+            date: inDays(-10),
+            slot: SLOTS[0],
+            note: "6 months of newspapers plus office printouts and cardboard boxes.",
+            status: "done",
+            buyer: "CityScrap Co.",
+            buyerPhone: "9741100033",
+            buyerDate: inDays(-10),
+            paymentMethod: "Bank Transfer",
+            txRef: "TXN-772041"
+          }
+        ]
+      };
+    }
+
+    function load() {
+      try {
+        const r = localStorage.getItem(KEY);
+        if (r) return JSON.parse(r);
+      } catch (e) { }
+      return mem || (mem = seed());
+    }
+
+    function save() {
+      mem = db;
+      try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { }
+    }
+
+    function loadSess() {
+      try { return JSON.parse(sessionStorage.getItem("scrapline.s")); } catch (e) { return null; }
+    }
+
+    function saveSess() {
+      try { sessionStorage.setItem("scrapline.s", JSON.stringify(sess)); } catch (e) { }
+    }
+
+    let db = load(), sess = loadSess(), view = "home", tab = "open", bTab = "browse", filter = "All";
+
+    function toast(m) {
+      const t = $("#toast");
+      t.textContent = m;
+      t.classList.add("on");
+      clearTimeout(toast.t);
+      toast.t = setTimeout(() => t.classList.remove("on"), 2600);
+    }
+
+    function go(v) { view = v; render(); }
+    function refresh() { db = load(); }
+
+    function login(role, e) {
+      e.preventDefault();
+      const f = e.target, name = f.name.value.trim(), phone = f.phone.value.trim(), er = f.querySelector(".err");
+      if (name.length < 2) { er.textContent = "Enter your name (at least 2 characters)."; return; }
+      if (!/^[6-9]\d{9}$/.test(phone)) { er.textContent = "Enter a valid 10-digit Indian mobile number."; return; }
+      sess = { role, name, phone };
+      saveSess();
+      view = "portal";
+      tab = "open";
+      bTab = "browse";
+      render();
+    }
+
+    function logout() {
+      sess = null;
+      try { sessionStorage.removeItem("scrapline.s"); } catch (e) { }
+      view = "home";
+      render();
+    }
+
+    function home() {
+      return `
+<h1>Sell your scrap. We schedule the pickup.</h1>
+<p class="lead">Households list recyclable paper, plastic, metal, and e-waste. Verified scrap collectors accept the listing, record actual weight on spot, and settle immediate payout.</p>
+<div class="portals">
+ <form class="portal" onsubmit="login('seller',event)">
+  <h2>Household / Seller</h2><p>List scrap items, choose pickup slots, and track instant payout settlements.</p>
+  <div><label for="sn">Your name</label><input id="sn" name="name" value="" autocomplete="name"></div>
+  <div><label for="sp">Mobile number</label><input id="sp" name="phone" value="" inputmode="numeric" maxlength="10" autocomplete="tel"></div>
+  <p class="err"></p><button class="btn y">Enter seller portal</button>
+ </form>
+ <form class="portal b" onsubmit="login('buyer',event)">
+  <h2>Scrap Buyer / Recycler</h2><p>Claim nearby batches, complete on-spot weighing, and make payments directly.</p>
+  <div><label for="bn">Collector / Business name</label><input id="bn" name="name" value="" autocomplete="organization"></div>
+  <div><label for="bp">Mobile number</label><input id="bp" name="phone" value="" inputmode="numeric" maxlength="10" autocomplete="tel"></div>
+  <p class="err"></p><button class="btn">Enter buyer portal</button>
+ </form>
+</div>`;
+    }
+
+    const rateCard = () => `<div class="rates">${Object.entries(RATES).map(([k, v]) => `<span class="rate">${k} <b>${inr(v)}/kg</b></span>`).join("")}</div>`;
+    const opts = (arr, sel) => arr.map(o => `<option ${o === sel ? "selected" : ""}>${esc(o)}</option>`).join("");
+
+    function sellerPortal() {
+      const mine = db.listings.filter(l => l.phone === sess.phone).sort((a, b) => b.id - a.id);
+      const shown = mine.filter(l => tab === "all" || (tab === "open" ? l.status !== "done" : l.status === "done"));
+      return `<h1 style="font-size:36px;margin-top:24px">Hello, ${esc(sess.name.split(" ")[0])}</h1>
+  <p class="lead" style="margin-bottom:14px">Live Scrap Rates:</p>${rateCard()}
+  <div class="grid">
+   <form class="panel" onsubmit="addListing(event)" id="lf">
+    <h2>Post New Scrap</h2>
+    <div class="row"><div><label for="c">Category</label><select id="c" name="cat" onchange="est()">${opts(Object.keys(RATES))}</select></div>
+    <div><label for="k">Estimated weight (kg)</label><input id="k" name="kg" type="number" min="1" max="2000" value="15" oninput="est()"></div></div>
+    <div class="est" id="est"></div>
+    <div style="margin-bottom:12px"><label for="a">Pickup locality</label><input id="a" name="area" placeholder="e.g. Indiranagar, 12th Main"></div>
+    <div class="row"><div><label for="d">Preferred Date</label><input id="d" name="date" type="date" min="${today()}" value="${inDays(1)}"></div>
+    <div><label for="s">Time window</label><select id="s" name="slot">${opts(SLOTS)}</select></div></div>
+    <div style="margin-bottom:12px"><label for="n">Notes & Landmark</label><textarea id="n" name="note" rows="2" placeholder="e.g. Bundled newspapers, 2nd floor lift available"></textarea></div>
+    
+    <label style="display:block;margin-bottom:6px">Scrap Photo <span style="font-weight:400;opacity:.7">(Optional)</span></label>
+    <div class="photo-preview-wrap" id="pv-wrap"><img id="pv-img" src="" alt="Preview"><button class="rm-photo" onclick="clearPhoto()" type="button">&#x2715; Remove</button></div>
+    <div class="photo-cam-btn">
+      <button type="button" onclick="openCamera()">&#x1F4F7; Take Photo</button>
+      <button type="button" onclick="document.getElementById('photo-file').click()">&#x1F5BC;&#xFE0F; Upload Photo</button>
+      <input type="file" accept="image/*" id="photo-file" style="display:none" onchange="handleFilePhoto(this)">
+    </div>
+    <p class="err" id="lerr"></p><button class="btn">Publish Listing</button>
+   </form>
+   <section>
+    <h2>Your Scrap Bookings</h2>
+    <div class="tabs" role="tablist" style="margin:0 0 14px">${[["open", "Active"], ["done", "Completed & Paid"], ["all", "All"]].map(([k, t]) => `<button class="tab" role="tab" aria-selected="${tab === k}" onclick="tab='${k}';render()">${t}</button>`).join("")}</div>
+    ${shown.length ? shown.map(sellerCard).join("") : `<div class="empty">No listings found in this tab.</div>`}
+   </section>
+  </div>`;
+    }
+
+    function sellerCard(l) {
+      const resched = l.status === "scheduled" && (l.buyerDate !== l.date || l.buyerSlot !== l.slot);
+      return `<article class="item ${l.status}">
+  ${l.photo ? `<img class="card-photo" src="${l.photo}" alt="Scrap Photo">` : ""}
+  <h3><span>${esc(l.cat)} · ${l.kg} kg</span><span class="tag ${l.status}">${{ open: "Awaiting Collector", scheduled: "Pickup Scheduled", done: "Paid & Collected" }[l.status]}</span></h3>
+  <div class="meta"><b>Location:</b> ${esc(l.area)} · Requested for ${fmtD(l.date)} (${esc(l.slot)})</div>
+  ${l.note ? `<div class="meta"><b>Notes:</b> ${esc(l.note)}</div>` : ""}
+  ${l.status === "scheduled" ? `<div class="meta" style="color:var(--ink);font-weight:600;margin-top:6px;">Collector: ${esc(l.buyer)} (${esc(l.buyerPhone)}) · Arriving ${fmtD(l.buyerDate)}, ${esc(l.buyerSlot)}${resched ? " (adjusted time)" : ""}</div>` : ""}
+  ${l.status === "done" ? `<div class="meta" style="color:var(--green);font-weight:700;margin-top:6px;">Paid ${inr(l.payout)} for ${l.actualKg} kg via ${esc(l.paymentMethod || 'UPI')} (Ref: ${esc(l.txRef || 'N/A')})</div>` : ""}
+  ${l.status === "open" ? `<div class="acts"><button class="btn warn sm" onclick="cancelListing(${l.id})">Cancel listing</button></div>` : ""}
+  </article>`;
+    }
+
+    function buyerPortal() {
+      const open = db.listings.filter(l => l.status === "open");
+      const cats = ["All", ...Object.keys(RATES)];
+      const browse = open.filter(l => filter === "All" || l.cat === filter).sort((a, b) => a.date.localeCompare(b.date));
+      const mine = db.listings.filter(l => l.buyerPhone === sess.phone && l.status !== "open");
+      const sched = mine.filter(l => l.status === "scheduled");
+      const done = mine.filter(l => l.status === "done");
+      const spent = done.reduce((s, l) => s + (l.payout || 0), 0);
+      const kg = done.reduce((s, l) => s + (l.actualKg || 0), 0);
+
+      return `<h1 style="font-size:36px;margin-top:24px">${esc(sess.name)}</h1>
+  <p class="lead" style="margin-bottom:14px">${open.length} available scrap offers · ${sched.length} pickups scheduled · ${kg.toFixed(1)} kg collected (${inr(spent)} paid)</p>${rateCard()}
+  <div class="tabs" role="tablist" style="margin:0 0 16px">${[["browse", "Marketplace (" + open.length + ")"], ["sched", "My Pickups (" + sched.length + ")"], ["done", "Payment Receipts (" + done.length + ")"]].map(([k, t]) => `<button class="tab" role="tab" aria-selected="${bTab === k}" onclick="bTab='${k}';render()">${t}</button>`).join("")}</div>
+  ${bTab === "browse" ? `<div style="max-width:240px;margin-bottom:14px"><label for="f">Filter Material Category</label><select id="f" onchange="filter=this.value;render()">${opts(cats, filter)}</select></div>${browse.length ? browse.map(buyerOpen).join("") : `<div class="empty">No open waste materials matching this category.</div>`}`
+          : bTab === "sched" ? (sched.length ? sched.map(buyerSched).join("") : `<div class="empty">No pickups currently queued. Browse available listings to accept pickups.</div>`)
+            : (done.length ? done.map(buyerReceipt).join("") : `<div class="empty">Completed payments and receipts will display here.</div>`)}`;
+    }
+
+    function buyerOpen(l) {
+      return `<article class="item open">
+ ${l.photo ? `<img class="card-photo" src="${l.photo}" alt="Scrap">` : ""}
+ <h3><span>${esc(l.cat)} · ~${l.kg} kg</span><span class="tag open">Est. ${inr(l.kg * RATES[l.cat])}</span></h3>
+ <div class="meta"><b>Address:</b> ${esc(l.area)} · Seller: ${esc(l.seller)} (${esc(l.phone)})</div>
+ <div class="meta">Requested slot: ${fmtD(l.date)}, ${esc(l.slot)}</div>
+ ${l.note ? `<div class="meta"><b>Note:</b> ${esc(l.note)}</div>` : ""}
+ <div class="acts"><div><label for="d${l.id}">Pickup date</label><input id="d${l.id}" type="date" min="${today()}" value="${l.date}"></div>
+ <div><label for="s${l.id}">Slot</label><select id="s${l.id}">${opts(SLOTS, l.slot)}</select></div>
+ <button class="btn sm" onclick="accept(${l.id})">Confirm Pickup</button></div></article>`;
+    }
+
+    function buyerSched(l) {
+      return `<article class="item scheduled">
+ <h3><span>${esc(l.cat)} · Est. ${l.kg} kg</span><span class="tag scheduled">${fmtD(l.buyerDate)}, ${esc(l.buyerSlot)}</span></h3>
+ <div class="meta"><b>Seller:</b> ${esc(l.seller)} · <b>Phone:</b> ${esc(l.phone)} · <b>Location:</b> ${esc(l.area)}</div>
+ ${l.note ? `<div class="meta"><b>Seller Note:</b> ${esc(l.note)}</div>` : ""}
+ <div class="acts"><div><label for="w${l.id}">Measured Net Weight (kg)</label><input id="w${l.id}" type="number" min="0.5" step="0.5" value="${l.kg}"></div>
+ <button class="btn y sm" onclick="openPaymentModal(${l.id})">Record weight & pay</button>
+ <button class="btn warn sm" onclick="release(${l.id})">Cancel Pickup</button></div></article>`;
+    }
+
+    function buyerReceipt(l) {
+      return `<article class="item done">
+        <h3><span>${esc(l.cat)} · ${l.actualKg} kg</span><span class="tag done">Paid ${inr(l.payout)}</span></h3>
+        <div class="meta"><b>Seller:</b> ${esc(l.seller)} (${esc(l.phone)}) · ${esc(l.area)}</div>
+        <div class="meta"><b>Payment Reference:</b> ${esc(l.txRef || 'TXN-000')} · Method: <b>${esc(l.paymentMethod || 'UPI')}</b></div>
+      </article>`;
+    }
+
+    function est() {
+      const c = $("#c"), k = $("#k");
+      if (!c) return;
+      const v = +k.value > 0 ? +k.value * RATES[c.value] : 0;
+      $("#est").textContent = "Estimated Value: " + inr(v) + " (Rate: " + inr(RATES[c.value]) + "/kg. Final payout determined by scale weight at pickup)";
+    }
+
+    function addListing(e) {
+      e.preventDefault();
+      refresh();
+      const f = e.target, er = $("#lerr");
+      const kg = +f.kg.value, area = f.area.value.trim();
+      if (!(kg >= 1 && kg <= 2000)) { er.textContent = "Weight must be between 1 and 2000 kg."; return; }
+      if (area.length < 3) { er.textContent = "Please provide an area or locality."; return; }
+      if (!f.date.value || f.date.value < today()) { er.textContent = "Choose a valid pickup date."; return; }
+      db.listings.push({
+        id: Date.now(),
+        seller: sess.name,
+        phone: sess.phone,
+        cat: f.cat.value,
+        kg,
+        area,
+        date: f.date.value,
+        slot: f.slot.value,
+        note: f.note.value.trim(),
+        status: "open",
+        photo: pendingPhoto || null
+      });
+      pendingPhoto = null;
+      save();
+      tab = "open";
+      toast("Scrap pickup listing posted!");
+      render();
+    }
+
+    function cancelListing(id) {
+      refresh();
+      db.listings = db.listings.filter(l => !(l.id === id && l.status === "open"));
+      save();
+      toast("Listing cancelled");
+      render();
+    }
+
+    function accept(id) {
+      refresh();
+      const l = db.listings.find(x => x.id === id), d = $("#d" + id).value, s = $("#s" + id).value;
+      if (!l || l.status !== "open") { toast("Listing no longer open."); render(); return; }
+      if (!d || d < today()) { toast("Please pick a valid date."); return; }
+      Object.assign(l, { status: "scheduled", buyer: sess.name, buyerPhone: sess.phone, buyerDate: d, buyerSlot: s });
+      save();
+      bTab = "sched";
+      toast("Pickup scheduled successfully");
+      render();
+    }
+
+    function release(id) {
+      refresh();
+      const l = db.listings.find(x => x.id === id);
+      if (!l) { toast("Listing not found."); return; }
+      ["buyer", "buyerPhone", "buyerDate", "buyerSlot"].forEach(k => delete l[k]);
+      l.status = "open";
+      save();
+      bTab = "browse";
+      toast("Listing released back to marketplace");
+      render();
+    }
+
+    /* ── Payment Flow ── */
+    let activePayListing = null;
+    let currentMethod = "UPI";
+    let activeMeasuredWeight = 0;
+
+    function openPaymentModal(id) {
+      refresh();
+      const l = db.listings.find(x => x.id === id);
+      const weightInput = $("#w" + id);
+      const w = weightInput ? +weightInput.value : l.kg;
+      if (!(w > 0)) { toast("Please enter a valid scale weight in kg."); return; }
+
+      activePayListing = l;
+      activeMeasuredWeight = w;
+      currentMethod = "UPI";
+
+      const total = w * RATES[l.cat];
+      const sumEl = $("#pay-summary");
+      sumEl.innerHTML = `
+        <div class="line-item"><span>Seller / Payee:</span> <b>${esc(l.seller)}</b></div>
+        <div class="line-item"><span>Material Category:</span> <b>${esc(l.cat)} (${inr(RATES[l.cat])}/kg)</b></div>
+        <div class="line-item"><span>Verified Net Weight:</span> <b>${w} kg</b></div>
+        <div class="line-item total"><span>Total Amount to Pay:</span> <span>${inr(total)}</span></div>
+      `;
+
+      renderPayFields();
+      $("#pay-modal").classList.add("open");
+    }
+
+    function setPayMethod(m, el) {
+      currentMethod = m;
+      document.querySelectorAll(".method-opt").forEach(x => x.classList.remove("active"));
+      el.classList.add("active");
+      renderPayFields();
+    }
+
+    function renderPayFields() {
+      const container = $("#pay-dynamic-fields");
+      if (currentMethod === "UPI") {
+        container.innerHTML = `
+          <label for="pay-upi">Recipient UPI ID or Linked Mobile</label>
+          <input id="pay-upi" value="${activePayListing ? activePayListing.phone + '@upi' : ''}" placeholder="username@okhdfcbank">
+          <p style="font-size:12px;color:var(--mute);margin:4px 0;">Instant push to seller's VPA via NPCI UPI gateway.</p>
+        `;
+      } else if (currentMethod === "Bank Transfer") {
+        container.innerHTML = `
+          <div class="row">
+            <div><label>Account Number</label><input id="pay-acc" value="919876500011" placeholder="Account no."></div>
+            <div><label>IFSC Code</label><input id="pay-ifsc" value="HDFC0001234" placeholder="IFSC"></div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <p style="background:var(--bg);padding:10px;border:1px solid var(--line);font-size:13px;margin:0;">
+            Hand over cash directly to <b>${esc(activePayListing.seller)}</b> and obtain physical scrap handover.
+          </p>
+        `;
+      }
+    }
+
+    function confirmPayment() {
+      if (!activePayListing) return;
+      refresh();
+      const l = db.listings.find(x => x.id === activePayListing.id);
+      const total = activeMeasuredWeight * RATES[l.cat];
+      const ref = currentMethod === "Cash" ? "CASH-" + Math.floor(100000 + Math.random() * 900000) : "TXN-" + Math.floor(100000 + Math.random() * 900000);
+
+      Object.assign(l, {
+        status: "done",
+        actualKg: activeMeasuredWeight,
+        payout: total,
+        paymentMethod: currentMethod,
+        txRef: ref,
+        paidAt: new Date().toISOString()
+      });
+
+      save();
+      closePayment();
+      bTab = "done";
+      toast("Payment completed successfully! Receipt will be sahred via mail .");
+      render();
+    }
+
+    function closePayment() {
+      activePayListing = null;
+      $("#pay-modal").classList.remove("open");
+    }
+
+    /* ── Camera & Photo Handling ── */
+    let pendingPhoto = null;
+    let camStream = null;
+
+    function updatePhotoPreview(dataUrl) {
+      pendingPhoto = dataUrl;
+      const wrap = $("#pv-wrap"), img = $("#pv-img");
+      if (!wrap || !img) return;
+      if (dataUrl) { img.src = dataUrl; wrap.classList.add("has-photo"); }
+      else { img.src = ""; wrap.classList.remove("has-photo"); }
+    }
+
+    function clearPhoto() {
+      pendingPhoto = null;
+      const wrap = $("#pv-wrap"), img = $("#pv-img");
+      if (wrap) wrap.classList.remove("has-photo");
+      if (img) img.src = "";
+      const fi = $("#photo-file"); if (fi) fi.value = "";
+    }
+
+    function handleFilePhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+      if (file.size > 8 * 1024 * 1024) { toast("Photo too large (max 8 MB)"); return; }
+      const reader = new FileReader();
+      reader.onload = e => updatePhotoPreview(e.target.result);
+      reader.readAsDataURL(file);
+    }
+
+    async function openCamera() {
+      let modal = $("#cam-modal");
+      if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "cam-modal";
+        modal.innerHTML = `
+          <video id="cam-video" autoplay playsinline muted></video>
+          <div class="cam-controls">
+            <button class="cam-shutter" onclick="capturePhoto()" title="Capture Photo">📷</button>
+            <button class="cam-close" onclick="closeCamera()">Close</button>
+          </div>`;
+        document.body.appendChild(modal);
+      }
+      modal.classList.add("open");
+      try {
+        camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+        const vid = $("#cam-video");
+        if (vid) vid.srcObject = camStream;
+      } catch (err) {
+        toast("Unable to open camera: " + err.message);
+        closeCamera();
+      }
+    }
+
+    function capturePhoto() {
+      const vid = $("#cam-video");
+      if (!vid || !vid.videoWidth) return;
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.min(640, vid.videoWidth);
+      canvas.height = Math.round(vid.videoHeight * (canvas.width / vid.videoWidth));
+      canvas.getContext("2d").drawImage(vid, 0, 0, canvas.width, canvas.height);
+      updatePhotoPreview(canvas.toDataURL("image/jpeg", 0.8));
+      closeCamera();
+      toast("Photo attached ✓");
+    }
+
+    function closeCamera() {
+      if (camStream) { camStream.getTracks().forEach(t => t.stop()); camStream = null; }
+      const modal = $("#cam-modal");
+      if (modal) modal.classList.remove("open");
+    }
+
+    function render() {
+      refresh();
+      $("#who").innerHTML = sess ? `<span>${esc(sess.name)} · <b>${sess.role === "seller" ? "Seller" : "Buyer"}</b></span><button class="btn sec sm" onclick="logout()">Sign out</button>` : "";
+      $("#app").innerHTML = (!sess || view === "home") ? home() : (sess.role === "seller" ? sellerPortal() : buyerPortal());
+      if (sess && view !== "home" && sess.role === "seller") { est(); updatePhotoPreview(pendingPhoto); }
+    }
+
+    if (sess) view = "portal";
+    render();
+  </script>
+</body>
+
+</html>
